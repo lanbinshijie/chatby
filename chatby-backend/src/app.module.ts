@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 @Module({
@@ -16,6 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true, // 自动更新数据库
       autoLoadEntities: true, // 自动加载实体
     }),
+    AuthModule,
   ],
   controllers: [],
   providers: [],
