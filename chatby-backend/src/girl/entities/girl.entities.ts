@@ -16,7 +16,4 @@ export class Girl {
 
     @CreateDateColumn({type: "timestamp"})
     entryTime: Date;
-
-    @Generated('uuid')
-    uuid: string;
 }
