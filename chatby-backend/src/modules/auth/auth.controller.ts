@@ -1,3 +1,4 @@
+
 import { Controller, Get, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RCode } from 'src/common/constants/rcode';
@@ -19,16 +20,41 @@ export class AuthController {
     }
 
     @Get('/register')
-    register(@Query() query) {
+    async register(@Query() query) {
         // 获取参数username和password
         const { username, password } = query;
-        let data = this.authService.register(username, password);
+        // 调用service中的register方法
+        let data = await this.authService.register(username, password);
+        // 根据返回的code值，返回不同的状态码
         let code = data.code === RCode.OK ? 200 : 400;
+        let msg = data.code === RCode.OK ? '注册成功！' : '注册失败！' + data.data;
         return {
             code: code,
-            data: data.data,
-            message: '注册成功！'
+            data: data.code === RCode.OK ? data.data : null,
+            message: msg
         };
+    }
+
+    @Get('/login')
+    async login(@Query() query) {
+        // 获取参数username和password
+        const { username, password, device } = query;
+        // 调用service中的login方法
+        let data = await this.authService.login(username, password, device, false);
+        // 根据返回的code值，返回不同的状态码
+        let code = data.code === RCode.OK ? 200 : 400;
+        let msg = data.code === RCode.OK ? '登录成功！' : '登录失败！' + data.data;
+        return {
+            code: code,
+            data: data.code === RCode.OK ? data.data : null,
+            message: msg
+        };
+    }
+
+
+    @Get('/selectAllUser')
+    selectAllUser() {
+        return this.authService.selectAllUser();
     }
 
 }
