@@ -1,18 +1,9 @@
 <template>
     <!-- Chat包含一个背景层和一个窗口 -->
-    <div class="chat-background"></div>
+    <div class="chat-background" :style="{'background-image': `url('${background}')`}"></div>
     <div class="chat-window">
         <div class="nav">
-            <!-- Nav栏在最左侧，最上方有三个按钮，分别为黄、红、绿 -->
-            <div class="buttons">
-                <div class="y"></div>
-                <div class="r"></div>
-                <div class="g"></div>
-            </div>
-            <!-- 下方是一个头像栏，方形圆角 -->
-            <div class="avatar"></div>
-            <!-- AntDesign Vue 测试 -->
-            <a-button type="primary">你好世界！</a-button>
+            <Navbar></Navbar>
         </div>
         <div class="sidebar">
             <Sidebar></Sidebar>
@@ -21,13 +12,27 @@
     </div>
 </template>
 <script lang="ts">
+import Sidebar from '../components/WindowSideBar.vue';
+import Navbar from '../components/WindowNavBar.vue';
+import fetch from '../api/axios/index'
+import { message } from 'ant-design-vue';
 // 导入Sidebar组件
-
 export default {
-    name: 'Chat',
-    setup() {
-        return {}
+    name: "Chat",
+    components: {
+        Sidebar,
+        Navbar,
+    },
+    setup(){
+        fetch('/auth/version').then(res => {
+            console.log(res)
+            message.success('当前版本：' + res.data.version)
+        })
+        return {
+            background: 'https://file.dujin.org/image/fengjing/466f79e8ly1gzb0wwlmh9j21hc0u0qby.jpg'
+        }
     }
+
 }
 </script>
 <style>
@@ -38,7 +43,6 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://file.dujin.org/image/fengjing/466f79e8ly1gzb0wwlmh9j21hc0u0qby.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     /* 模糊毛玻璃效果 */
@@ -46,15 +50,19 @@ export default {
     outline: #000 solid 10px;
 }
 
-/* 设置主窗口： 宽为80%，高为80%，背景设置成淡黄色*/
+/* 设置主窗口： 占满全屏，背景设置成淡黄色*/
 .chat-window {
     /* 窗口居中 */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
-    height: 80%;
+    /* 占满全屏 */
+    width: 100%;
+    height: 100%;
+    /* 占部分大小 */
+    /* width: 90%;
+    height: 90%; */
     background-color: rgba(245, 244, 239, 0.8);
     border-radius: 10px;
     /* 最小宽度为1000px，最小高度为800px */
@@ -132,7 +140,7 @@ export default {
     /* 深黄色 */
     color: #896e00;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -142,7 +150,7 @@ export default {
     /* 深红色 */
     color: #861515;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -152,7 +160,7 @@ export default {
     /* 深绿色 */
     color: #15711a;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -182,7 +190,7 @@ export default {
     background-image: url('https://img2.woyaogexing.com/2020/05/01/f7b9586dca084c7881d57dce3d0064ed!400x400.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
-    outline: #fff 2px solid; /* 近似白色的边框 */
+    outline: #363636 2px solid; /* 近似白色的边框 */
     
 }
 
@@ -190,6 +198,15 @@ export default {
 .chat-window .nav .avatar:hover {
     box-shadow: 0 0 10px #000;
     filter: blur(2px);
+}
+
+/* 设置SideBar宽度适当，背景为白色 */
+.chat-window .sidebar {
+    width: 340px;
+    height: 100%;
+    float: left;
+    background-color: #fff;
+    border-radius: 0 2px 2px 0;
 }
 
 </style>
