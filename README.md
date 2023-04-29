@@ -1,6 +1,11 @@
-<center><img src="https://s1.ax1x.com/2023/04/29/p93V78A.png" style="height: 80px; width:80px;"></img></center>
+<p align="center">
+    <a href="https://github.com/lanbinshijie/ChatBy" target="_blank" rel="noopener noreferrer">
+        <img src="https://s1.ax1x.com/2023/04/29/p93V78A.png" width="100"></img>
+    </a>
+</p>
 
-<h3 style="text-align: center">ChatBy - 轻量的开源IM聊天软件</h3>
+
+<h3 align="center">ChatBy - 轻量的开源IM聊天软件</h3>
 <p align="center"><b>ChatBy</b> [ˈtʃæt ˈbaɪ]，一款轻量的开源IM聊天软件</p>
 
 <p align="center">
