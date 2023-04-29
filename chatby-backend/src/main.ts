@@ -5,7 +5,7 @@ import * as cors from 'cors';
 
 
 function MiddleWareAll(req: any, res: any, next: any) {
-  console.log('已经进入全局中间件…………');
+  // console.log('已经进入全局中间件…………');
   next();
 }
 
