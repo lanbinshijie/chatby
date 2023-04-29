@@ -11,11 +11,25 @@
             </div>
             <!-- 下方是一个头像栏，方形圆角 -->
             <div class="avatar"></div>
+            <!-- AntDesign Vue 测试 -->
+            <a-button type="primary">你好世界！</a-button>
         </div>
-        <div class="sidebar"></div>
+        <div class="sidebar">
+            <Sidebar></Sidebar>
+        </div>
         <div class="main"></div>
     </div>
 </template>
+<script lang="ts">
+// 导入Sidebar组件
+
+export default {
+    name: 'Chat',
+    setup() {
+        return {}
+    }
+}
+</script>
 <style>
 /* 设置背景：全屏，背景图片，不缩放 */
 .chat-background {
@@ -179,11 +193,3 @@
 }
 
 </style>
-<script lang="ts">
-export default {
-    name: 'Chat',
-    setup() {
-        return {}
-    }
-}
-</script>
