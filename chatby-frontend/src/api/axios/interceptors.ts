@@ -1,21 +1,24 @@
 import { message } from 'ant-design-vue';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
-
-
-export const requestSuccess = (request: AxiosRequestConfig) => {
-    return request;
-};
+interface GeneralResponse extends AxiosResponse {
+    code: number;
+    message: string;
+}
 
 export const requestFail = (error: any) => {
     return Promise.reject(error);
 }
 
 export const responseSuccess = (response: AxiosResponse) => {
-    return response.data;
+    if(response.data.code !== 200) {
+        message.error(response.data.message);
+        return Promise.reject(response.data);
+    }
+    return response;
 }
 
 export const responseFail = (error: any) => {
-    message.error(error.message);
+    message.error(error.data.message);
     return Promise.reject(error);
 }

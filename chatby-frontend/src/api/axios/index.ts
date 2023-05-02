@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
-import { requestSuccess, requestFail, responseSuccess, responseFail } from './interceptors';
+import { requestFail, responseSuccess, responseFail } from './interceptors';
+
 
 const fetch: AxiosInstance = axios.create({
   timeout: 60000, // 超时时间一分钟
@@ -12,7 +13,11 @@ const fetch: AxiosInstance = axios.create({
   withCredentials: false,
 });
 
-fetch.interceptors.request.use(requestSuccess, requestFail);
+fetch.interceptors.request.use((request) => {
+  const token = "This is token"
+  request.headers.token = token;
+  return request;
+}, requestFail);
 fetch.interceptors.response.use(responseSuccess, responseFail);
 
 export default fetch;
