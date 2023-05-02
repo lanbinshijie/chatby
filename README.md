@@ -22,8 +22,9 @@ ChatBy是一款基于MIT协议开源的在线IM聊天软件，支持私有部署
 
 半成品预览：
 
-<img src="https://s1.ax1x.com/2023/04/30/p933QtP.png" width=100%>
-
+<!-- <img src="https://s1.ax1x.com/2023/04/30/p933QtP.png" width=100%> -->
+<img src="https://s1.ax1x.com/2023/05/02/p9GWTWq.png" width=100%>
+<img src="https://s1.ax1x.com/2023/05/02/p9GWHS0.png" width=100%>
 
 ## 主要功能
 
