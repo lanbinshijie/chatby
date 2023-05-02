@@ -9,24 +9,13 @@ export class AuthController {
 
     constructor(private readonly authService: AuthService) {}
 
-    @Get('/version')
-    version() {
-        return {
-            code: 200,
-            data: {
-                version: '1.0.0'
-            },
-            message: '获取版本号成功！'
-        };
-    }
-
-    @Post('/register')
+    @Post('/register') // 注册
     async register(@Body() body: AuthRegisteryDto) {
         // 调用service中的register方法
         let data = await this.authService.register(body);
         // 根据返回的code值，返回不同的状态码
         let code = data.code === RCode.OK ? 200 : 400;
-        let msg = data.code === RCode.OK ? '注册成功！' : '注册失败！' + data.data;
+        let msg = data.code === RCode.OK ? '注册成功，请登录！' : '注册失败！' + data.data;
         return {
             code: code,
             data: data.code === RCode.OK ? data.data : "",
@@ -34,7 +23,7 @@ export class AuthController {
         };
     }
 
-    @Post('/login')
+    @Post('/login') // 登录
     async login(@Body() body: AuthLoginDto) {
         // 获取参数username和password
         const { username, password, device } = body;
@@ -50,7 +39,7 @@ export class AuthController {
         };
     }
 
-    @Post('/loginByToken')
+    @Post('/loginByToken') // 通过token登录
     async loginByToken(@Body() body: AuthLoginDto) {
         // 获取参数username和token
         const { username, password, device } = body;
@@ -66,13 +55,7 @@ export class AuthController {
         };
     }
 
-    @Get('/selectAllUser')
-    selectAllUser() {
-        return this.authService.selectAllUser();
-    }
-
-    // 获取请求者的IP地址
-    @Get('/ip')
+    @Get('/ip') // 获取IP地址
     getIp(@Request() request) {
 
         return {

@@ -5,11 +5,11 @@
             <form action="#" @submit="preventSubmit($event)">
                 <h1>注册</h1>
                 <span>海纳百川，有容乃大，开启你的旅程！</span>
-                <input name="username" type="text" placeholder="Username" />
-                <input name="email" type="email" placeholder="Email" />
-                <input name="password" type="password" placeholder="Password" />
-                <input name="nickname" type="text" placeholder="Nickname" />
-                <button  :disabled="loading">开启旅程</button>
+                <input v-model="username" type="text" placeholder="Username" />
+                <input v-model="email" type="email" placeholder="Email" />
+                <input v-model="password" type="password" placeholder="Password" />
+                <input v-model="nickname" type="text" placeholder="Nickname" />
+                <button @click="register" :disabled="loading">开启旅程</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
@@ -115,14 +115,14 @@ export default defineComponent({
         // 验证用户名和密码是否合法（正则表达式）
         let username = this.username.trim();
         let password = this.password.trim();
-        // if (username.length < 6 || username.length > 20) {
-        //     message.error("用户名长度不合法");
-        //     return;
-        // }
-        // if (password.length < 6 || password.length > 20) {
-        //     message.error("密码长度不合法");
-        //     return;
-        // }
+        if (username.length < 4 || username.length > 20) {
+            message.error("用户名长度不合法");
+            return;
+        }
+        if (password.length < 6 || password.length > 20) {
+            message.error("密码长度不合法");
+            return;
+        }
         // 获取设备信息
         const device = await this.get_device();
         // 发送登录请求
@@ -160,6 +160,63 @@ export default defineComponent({
         // 跳转到首页
         this.$router.push('/');
     },
+
+    async register() {
+        // 检查输入是否合法
+        let username = this.username.trim();
+        let password = this.password.trim();
+        let email = this.email.trim();
+        let nickname = this.nickname.trim();
+        // 使用正则表达式检查：用户名、密码、邮箱、昵称
+        /*
+            用户名：4-20位字母数字下划线和减号
+            密码：6-20位字母数字符号（大小写）
+            邮箱：邮箱格式
+            昵称：1-20位中英文数字下划线和减号
+        */
+        let usernameReg = /^[a-zA-Z0-9_-]{4,20}$/;
+        let passwordReg = /^[a-zA-Z0-9_-]{6,20}$/;
+        let emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        let nicknameReg = /^[a-zA-Z0-9_\-\u4e00-\u9fa5]{1,20}$/;
+        if (!usernameReg.test(username)) {
+            message.error("用户名不合法");
+            return;
+        }
+        if (!passwordReg.test(password)) {
+            message.error("密码不合法");
+            return;
+        }
+        if (!emailReg.test(email)) {
+            message.error("邮箱不合法");
+            return;
+        }
+        if (!nicknameReg.test(nickname)) {
+            message.error("昵称不合法");
+            return;
+        }
+        // 发送注册请求
+        this.do_register(username, password, email, nickname);
+    },
+    do_register(username: string, password: string, email: string, nickname: string) {
+        mainStore.loading = true;
+        fetch('/auth/register', {
+            method: "POST",
+            data: {
+                username: username,
+                password: password,
+                email: email,
+                nickname: nickname,
+            }
+        }).then(res => {
+            message.success(res.data.message);
+            this.toggleLogin();
+        }).finally(() => {
+            setTimeout(() => {
+                mainStore.loading = false;
+            }, 500);
+        })
+    },
+
     async get_device(): Promise<UserAuthDeviceDto> {
         // 获取设备类型
         let deviceType = "Web";
