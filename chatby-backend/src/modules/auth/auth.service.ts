@@ -112,7 +112,7 @@ export class AuthService {
         
         let user_name = await this.authRepository.findOne({where: {username: username, password: password}});
         if(user_name) { // 如果存在，返回用户信息
-            await login_afterSuccess()
+            await login_afterSuccess(this.authRepository, user_name.id)
             return {
                 code: RCode.OK,
                 data: {
