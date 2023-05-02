@@ -2,17 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 import * as cors from 'cors';
-
-
-function MiddleWareAll(req: any, res: any, next: any) {
-  // console.log('已经进入全局中间件…………');
-  next();
-}
-
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(MiddleWareAll);
+  app.useGlobalPipes(new ValidationPipe({whitelist: true, transform: true}))
   app.use(cors())
   await app.listen(3000);
   if (module.hot) {
