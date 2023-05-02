@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { GirlModule } from './girl/girl.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BoyModule } from './boy/boy.module';
-import { ConfigModule } from './config/config.module';
+import { AuthModule } from './modules/auth/auth.module';
+
 
 @Module({
   imports: [
@@ -18,9 +17,7 @@ import { ConfigModule } from './config/config.module';
       synchronize: true, // 自动更新数据库
       autoLoadEntities: true, // 自动加载实体
     }),
-    GirlModule,
-    BoyModule,
-    ConfigModule.forRoot('测试'),
+    AuthModule,
   ],
   controllers: [],
   providers: [],
