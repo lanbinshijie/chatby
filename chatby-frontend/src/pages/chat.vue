@@ -8,14 +8,40 @@
         <div class="sidebar">
             <Sidebar></Sidebar>
         </div>
-        <div class="main"></div>
+        <div class="main">
+            {{ mainStore.userAuth }}
+            <div class="temp-show-info">
+                <!-- 显示用户名、密码、邮箱、id、昵称、登录时间 -->
+                <!-- 显示Token、过期时间和设备ID -->        
+                <p>用户名：{{ data.userAuth.username }}</p>
+                <p>密码：{{ data.userAuth.password }}</p>
+                <p>邮箱：{{ data.userAuth.email }}</p>
+                <p>id：{{ data.userAuth.id }}</p>
+                <p>昵称：{{ data.userAuth.nickname }}</p>
+                <p>登录时间：{{ data.userAuth.lastLoginTime }}</p>
+                <p>Token：{{ data.token.token }}</p>
+                <p>过期时间：{{ data.token.expireTime }}</p>
+                <p>设备ID：{{ data.token.deviceId }}</p>
+                <!-- 显示头像 -->
+                <img :src="data.userAuth.avatar" alt="头像" width="400" />
+            </div>
+
+            <a-button @click="handleLogout">退出登录</a-button>
+        </div>
     </div>
 </template>
 <script lang="ts">
 import Sidebar from '../components/WindowSideBar.vue';
 import Navbar from '../components/WindowNavBar.vue';
-import fetch from '../api/axios/index'
-import { message } from 'ant-design-vue';
+// import fetch from '../api/axios/index'
+// import { message } from 'ant-design-vue';
+
+// 引入Pinia的MainStore
+import { useMainStore } from '../store/index.ts';
+import { storeToRefs } from 'pinia';
+const mainStore = useMainStore()
+
+
 // 导入Sidebar组件
 export default {
     name: "Chat",
@@ -24,18 +50,40 @@ export default {
         Navbar,
     },
     setup(){
-        fetch('/auth/version').then(res => {
-            console.log(res)
-            message.success('当前版本：' + res.data.version)
-        })
+    },
+    data() {
         return {
+            mainStore: useMainStore(),
+            data: storeToRefs(mainStore),
             background: 'https://file.dujin.org/image/fengjing/466f79e8ly1gzb0wwlmh9j21hc0u0qby.jpg'
+        }
+    },
+    methods: {
+        handleLogout() {
+            mainStore.logout()
         }
     }
 
 }
 </script>
 <style>
+/* 临时代码 */
+
+.temp-show-info {
+    position: absolute;
+    /* top: 0; */
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background-color: #4a4a4a;
+    color: #fff;
+    padding: 20px;
+    overflow: auto;
+}
+
+
+/* ==================================================== */
+
 /* 设置背景：全屏，背景图片，不缩放 */
 .chat-background {
     position: fixed;
