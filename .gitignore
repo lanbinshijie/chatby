@@ -131,3 +131,6 @@ dist
 
 /dist
 .vscode
+
+# 所有的package-lock.json
+package-lock.json
