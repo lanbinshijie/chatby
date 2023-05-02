@@ -9,18 +9,20 @@ export class AuthToken {
     token: string;
 
     @Column()
-    expire: number;
+    expireTime: Date;
 
     @Column()
     uid: number;
 
-    @Column()
+    // 设备类型，默认值是PC
+    @Column({default: "PC"})
     deviceType: string;
 
-    @Column()
+
+    @Column({default: ""})
     deviceId: string;
 
-    @Column()
+    @Column({default: ""})
     ip: string;
 
     @Column()
