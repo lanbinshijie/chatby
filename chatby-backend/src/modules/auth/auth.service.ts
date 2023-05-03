@@ -142,5 +142,29 @@ export class AuthService {
         return this.authRepository.find();
     }
 
+    // 验证是否存在该用户
+    async verifyUser(username: string, id: number = -1): Promise<boolean> {
+        // 如果number不是-1，那么就是判断ID是否存在，
+        // 如果Username不是空，那么就是判断Username是否存在
+        // 如果两个都不是空，那么就是判断Username和ID是否存在（即是同一个用户的）
+        if(id != -1 && username == '') {
+            let user = await this.authRepository.findOne({where: {id: id}});
+            if(user) return true;
+        } else if(id == -1 && username != '') {
+            let user = await this.authRepository.findOne({where: {username: username}});
+            if(user) return true;
+        } else if(id != -1 && username != '') {
+            let user = await this.authRepository.findOne({where: {id: id, username: username}});
+            if(user) return true;
+        }
+        return false;
+    }
+
+    // getUidByToken
+    async getUidByToken(token: string): Promise<number> {
+        let token_data = await this.authTokenRepository.findOne({where: {token: token}});
+        if(token_data) return token_data.uid;
+        return -1;
+    }
 
 }
