@@ -1,10 +1,10 @@
 import { message } from 'ant-design-vue';
 import { AxiosResponse } from 'axios';
 
-interface GeneralResponse extends AxiosResponse {
-    code: number;
-    message: string;
-}
+// interface GeneralResponse extends AxiosResponse {
+//     code: number;
+//     message: string;
+// }
 
 export const requestFail = (error: any) => {
     return Promise.reject(error);
