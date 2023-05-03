@@ -2,7 +2,7 @@
   <!-- <Suspense>
     <LogicAutoLogin />
   </Suspense> -->
-  <div>
+  <div id="router">
     <RouterView />
   </div>
 </template>
