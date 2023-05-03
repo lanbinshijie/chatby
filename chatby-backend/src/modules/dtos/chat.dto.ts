@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from "typeorm";
+import { IsIn, IsNotEmpty } from "class-validator";
 
-@Entity()
-export class FriendMessages {
+// export class 
+export class FriendMessageDto {
     /**
      * 好友聊天记录（数据结构）
      * 信息ID：主键自增
@@ -15,31 +15,15 @@ export class FriendMessages {
      * 消息最后修改时间：date
      */
 
-    @PrimaryGeneratedColumn()
-    id: number;
-  
-    @Column()
+    id?: number;
     chatType: string;
-  
-    @Column()
     senderId: number;
-  
-    @Column()
     receiverId: number;
-  
-    @Column()
     content: string;
-  
-    @Column({ default: false })
-    isRevoke: boolean;
-  
-    @Column({ default: false })
-    isDisabled: boolean;
-  
-    @CreateDateColumn()
-    sendDate: Date;
-  
-    @CreateDateColumn()
-    lastModifiedDate: Date;
+    isRevoke?: boolean;
+    isDisabled?: boolean;
+    sendDate?: Date;
+    lastModifiedDate?: Date;
 
 }
+
