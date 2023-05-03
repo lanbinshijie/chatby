@@ -141,10 +141,10 @@ export default defineComponent({
         }).then(res => {
             this.data = res.data.data
             message.success(res.data.message);
-            this.login_success()
         }).finally(() => {
             setTimeout(() => {
                 mainStore.loading = false;
+                this.login_success()
             }, 500);
         })
     },
