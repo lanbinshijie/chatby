@@ -1,2 +1,2 @@
-cd chatby-backend && yarn dev
+cd chatby-backend && yarn start:dev
 

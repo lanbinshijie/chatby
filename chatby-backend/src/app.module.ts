@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './modules/auth/auth.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 
 @Module({
@@ -18,6 +19,7 @@ import { AuthModule } from './modules/auth/auth.module';
       autoLoadEntities: true, // 自动加载实体
     }),
     AuthModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [],

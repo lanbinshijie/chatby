@@ -4,8 +4,9 @@
 // 函数命名格式：调用函数_功能
 // 比如：login_afterSuccess就是登录成功后的操作
 
-async function login_afterSuccess(){
-    console.log("有人登陆成功了")
+async function login_afterSuccess(repo, uid){
+    // 设置用户最后登录时间
+    await repo.update(uid, {lastLoginTime: new Date()})
 }
 
-export {login_afterSuccess}
+export { login_afterSuccess }
