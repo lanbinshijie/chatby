@@ -43,3 +43,40 @@ export class FriendMessages {
     lastModifiedDate: Date;
 
 }
+
+// FriendRelation
+
+@Entity()
+export class FriendRelation {
+    /**
+     * ID：主键自增
+     * 用户ID：userid（申请人）
+     * 好友ID：friendid（被申请人）
+     * 状态：申请中、已同意、已拒绝、已删除好友（已删除后只能恢复成申请中）
+     * 内容：content，申请时的备注
+     * 申请时间：date
+     * 最后修改时间：date
+     */
+
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    userId: number;
+
+    @Column()
+    friendId: number;
+
+    @Column()
+    status: string;
+
+    @Column()
+    content: string;
+
+    @CreateDateColumn()
+    requestDate: Date;
+
+    @CreateDateColumn()
+    lastModifiedDate: Date;
+}
+
